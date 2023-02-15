@@ -176,6 +176,7 @@ def get_cluster_installation_events(logs_url, cluster_id):
 
 @functools.lru_cache(maxsize=100)
 def get_remote_archive(tar_url):
+    tar_url = 'http://127.0.0.1:8000/test-infra-cluster-8b545312_28525609-486c-49bc-9616-3f8fc789332f.tar'
     return nestedarchive.RemoteNestedArchive(tar_url, init_download=True)
 
 
@@ -201,7 +202,7 @@ def get_host_log_file(triage_logs_tar, host_id, filename):
     # The file is already uniquely determined by the host_id, we can omit the hostname
     hostname = "*"
 
-    return triage_logs_tar.get(f"{hostname}.tar.gz/logs_host_{host_id}/{filename}")
+    return triage_logs_tar.get(f"{hostname}.tar/{hostname}.tar.gz/logs_host_{host_id}/{filename}")
 
 
 def get_journal(triage_logs_tar, host_ip, journal_file):
@@ -1276,6 +1277,16 @@ class AgentStepFailureSignature(Signature):
         triage_logs_tar = get_triage_logs_tar(triage_url=url, cluster_id=cluster_id)
 
         report = ""
+        cluster['name'] = "test-infra-cluster-8b545312"
+        hosts = [
+            {'requested_hostname': "test-infra-cluster-8b545312-master-0", "role": "bootstrap", "id": "19ac726d-b207-4ed0-a574-36c6393763fe", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-master-1", "role": "master", "id": "fbf19c64-0550-4d89-94cd-34d4c4a494e3", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-master-2", "role": "master", "id": "b1f1e6ca-613f-4d91-ab34-b1caa8ed5b94", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-worker-0", "role": "worker", "id": "a65ade48-f17f-4e59-91ed-71a8ac56c6e8", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-worker-1", "role": "worker", "id": "7014883d-ee62-4241-afbc-70e17a5473c2", "status_info": "foo"},
+        ]
+        cluster['hosts'] = hosts
+
         for host in cluster["hosts"]:
             host_id = host["id"]
 
@@ -1661,6 +1672,16 @@ class ReleasePullErrorSignature(ErrorSignature):
         triage_logs_tar = get_triage_logs_tar(triage_url=url, cluster_id=cluster_id)
 
         report = ""
+        cluster['name'] = "test-infra-cluster-8b545312"
+        hosts = [
+            {'requested_hostname': "test-infra-cluster-8b545312-master-0", "role": "bootstrap", "id": "19ac726d-b207-4ed0-a574-36c6393763fe", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-master-1", "role": "master", "id": "fbf19c64-0550-4d89-94cd-34d4c4a494e3", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-master-2", "role": "master", "id": "b1f1e6ca-613f-4d91-ab34-b1caa8ed5b94", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-worker-0", "role": "worker", "id": "a65ade48-f17f-4e59-91ed-71a8ac56c6e8", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-worker-1", "role": "worker", "id": "7014883d-ee62-4241-afbc-70e17a5473c2", "status_info": "foo"},
+        ]
+        cluster['hosts'] = hosts
+
         for host in cluster["hosts"]:
             host_id = host["id"]
 
@@ -2070,6 +2091,16 @@ class ErrorOnCleanupInstallDevice(Signature):
         triage_logs_tar = get_triage_logs_tar(triage_url=url, cluster_id=cluster["id"])
 
         hosts = []
+        cluster['name'] = "test-infra-cluster-8b545312"
+        hosts = [
+            {'requested_hostname': "test-infra-cluster-8b545312-master-0", "role": "bootstrap", "id": "19ac726d-b207-4ed0-a574-36c6393763fe", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-master-1", "role": "master", "id": "fbf19c64-0550-4d89-94cd-34d4c4a494e3", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-master-2", "role": "master", "id": "b1f1e6ca-613f-4d91-ab34-b1caa8ed5b94", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-worker-0", "role": "worker", "id": "a65ade48-f17f-4e59-91ed-71a8ac56c6e8", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-worker-1", "role": "worker", "id": "7014883d-ee62-4241-afbc-70e17a5473c2", "status_info": "foo"},
+        ]
+        cluster['hosts'] = hosts
+
         for host in cluster["hosts"]:
             host_id = host["id"]
 
@@ -2236,6 +2267,17 @@ class FailedRequestTriggersHostTimeout(Signature):
     @classmethod
     def _failed_requests_hosts(cls, cluster, triage_logs_tar):
         failed_requests_hosts = set()
+
+        cluster['name'] = "test-infra-cluster-8b545312"
+        hosts = [
+            {'requested_hostname': "test-infra-cluster-8b545312-master-0", "role": "bootstrap", "id": "19ac726d-b207-4ed0-a574-36c6393763fe", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-master-1", "role": "master", "id": "fbf19c64-0550-4d89-94cd-34d4c4a494e3", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-master-2", "role": "master", "id": "b1f1e6ca-613f-4d91-ab34-b1caa8ed5b94", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-worker-0", "role": "worker", "id": "a65ade48-f17f-4e59-91ed-71a8ac56c6e8", "status_info": "foo"},
+            {'requested_hostname': "test-infra-cluster-8b545312-worker-1", "role": "worker", "id": "7014883d-ee62-4241-afbc-70e17a5473c2", "status_info": "foo"},
+        ]
+        cluster['hosts'] = hosts
+
         for host in cluster["hosts"]:
             try:
                 agent_logs = get_host_log_file(triage_logs_tar, host["id"], "agent.logs")
